@@ -99,7 +99,7 @@ var SettingsPage = (() => {
   // ---- Team Settings ----
   function _renderTeamSettings() {
     const employees = Store.getCollection('employees');
-    
+
     return `
       <div class="card">
         <div class="settings-section">
@@ -234,15 +234,12 @@ var SettingsPage = (() => {
           <div class="mt-lg p-lg bg-tertiary rounded-lg border border-color">
             <div class="flex items-center gap-md mb-md">
               <div class="text-warning">${Components.Icons.warning}</div>
-              <div>
-                <h4 class="font-bold">Armazenamento Local</h4>
-                <p class="text-sm text-secondary">Todos os dados deste CRM estão sendo salvos apenas no LocalStorage do seu navegador atual.</p>
-              </div>
+              
             </div>
             
             <div class="flex gap-sm mt-lg">
               <button class="btn btn-secondary" onclick="SettingsPage.resetDemoData()">
-                ${Components.Icons.refresh} Restaurar Dados de Demonstração
+                ${Components.Icons.refresh} Restaurar Dados
               </button>
               <button class="btn btn-danger" onclick="SettingsPage.clearAllData()">
                 ${Components.Icons.trash} Limpar Todos os Dados
@@ -283,8 +280,8 @@ var SettingsPage = (() => {
     App.renderCurrentPage();
   }
 
-  function afterRender() {}
-  function onLeave() {}
+  function afterRender() { }
+  function onLeave() { }
 
   return { render, afterRender, onLeave, setTab, saveOffice, openEmpForm, saveEmp, deleteEmp, resetDemoData, clearAllData };
 })();
