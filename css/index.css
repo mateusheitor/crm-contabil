@@ -380,9 +380,9 @@ table {
   }
 }
 
-.animate-fade-in { animation: fadeIn var(--transition-base) ease forwards; }
-.animate-fade-in-up { animation: fadeInUp var(--transition-slow) ease forwards; }
-.animate-slide-in-right { animation: slideInRight var(--transition-slow) ease forwards; }
+.animate-fade-in { animation: fadeIn var(--transition-base) forwards; }
+.animate-fade-in-up { animation: fadeInUp var(--transition-slow) forwards; }
+.animate-slide-in-right { animation: slideInRight var(--transition-slow) forwards; }
 .animate-scale-in { animation: scaleIn var(--transition-spring) forwards; }
 .animate-pulse { animation: pulse 2s ease-in-out infinite; }
 .animate-spin { animation: spin 1s linear infinite; }
@@ -390,7 +390,7 @@ table {
 /* Stagger children animation */
 .stagger-children > * {
   opacity: 0;
-  animation: fadeInUp var(--transition-slow) ease forwards;
+  animation: fadeInUp var(--transition-slow) forwards;
 }
 
 .stagger-children > *:nth-child(1) { animation-delay: 0ms; }

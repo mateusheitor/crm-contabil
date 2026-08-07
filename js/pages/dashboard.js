@@ -57,10 +57,10 @@ var DashboardPage = (() => {
 
       <!-- KPI Cards -->
       <div class="dashboard-grid stagger-children">
-        ${_kpiCard('Clientes Ativos', activeClients.length, 'clients', 'primary', 'accent-primary', '+2', 'up')}
-        ${_kpiCard('Receita Mensal', Utils.formatCurrency(monthRevenue), 'financial', 'success', 'accent-success', `${revenueTrend > 0 ? '+' : ''}${revenueTrend}%`, revenueTrend >= 0 ? 'up' : 'down')}
-        ${_kpiCard('Tarefas Pendentes', pendingTasks, 'services', 'warning', 'accent-warning', '', '')}
-        ${_kpiCard('Serviços Atrasados', overdueTasks, 'clock', 'danger', 'accent-danger', '', '', overdueTasks > 0)}
+        ${_kpiCard('Clientes Ativos', activeClients.length, 'clients', 'primary', 'accent-primary', '+2', 'up', false, 'clients')}
+        ${_kpiCard('Receita Mensal', Utils.formatCurrency(monthRevenue), 'financial', 'success', 'accent-success', `${revenueTrend > 0 ? '+' : ''}${revenueTrend}%`, revenueTrend >= 0 ? 'up' : 'down', false, 'financial')}
+        ${_kpiCard('Tarefas Pendentes', pendingTasks, 'services', 'warning', 'accent-warning', '', '', false, 'services')}
+        ${_kpiCard('Serviços Atrasados', overdueTasks, 'clock', 'danger', 'accent-danger', '', '', overdueTasks > 0, 'services')}
       </div>
 
       <!-- Charts -->
@@ -130,7 +130,7 @@ var DashboardPage = (() => {
     `;
   }
 
-  function _kpiCard(label, value, iconName, colorClass, accentClass, trend, trendDir, urgent = false) {
+  function _kpiCard(label, value, iconName, colorClass, accentClass, trend, trendDir, urgent = false, route = '') {
     const trendHtml = trend ? `
       <div class="kpi-trend ${trendDir}">
         ${trendDir === 'up' ? Components.Icons.arrowUp : Components.Icons.arrowDown}
@@ -139,7 +139,7 @@ var DashboardPage = (() => {
     ` : '';
 
     return `
-      <div class="kpi-card ${accentClass}">
+      <div class="kpi-card ${accentClass}" ${route ? `onclick="App.navigate('${route}')" style="cursor: pointer;"` : ''}>
         <div class="kpi-header">
           <div class="kpi-icon ${colorClass}">${Components.Icons[iconName] || ''}</div>
           ${trendHtml}

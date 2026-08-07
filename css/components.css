@@ -463,7 +463,7 @@
   align-items: center;
   justify-content: center;
   padding: var(--space-lg);
-  animation: fadeIn var(--transition-fast) ease;
+  animation: fadeIn var(--transition-fast);
   opacity: 0;
   pointer-events: none;
   transition: opacity var(--transition-fast);
@@ -570,11 +570,11 @@
   min-width: 300px;
   max-width: 420px;
   pointer-events: auto;
-  animation: slideToast var(--transition-base) ease forwards;
+  animation: slideToast var(--transition-base) forwards;
 }
 
 .toast.removing {
-  animation: slideToastOut var(--transition-base) ease forwards;
+  animation: slideToastOut var(--transition-base) forwards;
 }
 
 .toast-icon {
