@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Auto-cadastro — ContaPlus</title>
+  
+  <link rel="stylesheet" href="css/index.css">
+  <link rel="stylesheet" href="css/components.css">
+  
+  <style>
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      overflow-y: auto;
+      background: var(--bg-primary);
+      padding: var(--space-2xl) var(--space-md);
+    }
+    
+    .register-container {
+      width: 100%;
+      max-width: 600px;
+      animation: fadeInUp var(--transition-slow) ease forwards;
+    }
+    
+    .logo-header {
+      text-align: center;
+      margin-bottom: var(--space-xl);
+    }
+    
+    .logo-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: var(--radius-lg);
+      background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      margin-bottom: var(--space-md);
+      box-shadow: 0 8px 24px var(--accent-primary-glow);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="register-container">
+    <div class="logo-header">
+      <div class="logo-icon">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+      </div>
+      <h1 class="text-2xl font-bold mb-xs" id="office-title">Bem-vindo(a)</h1>
+      <p class="text-secondary">Preencha seus dados abaixo para iniciar seu cadastro.</p>
+    </div>
+
+    <!-- Register Form -->
+    <div class="card card-glass" id="form-card">
+      <form id="register-form">
+        <div class="form-group mb-lg pb-md border-b" style="border-color: var(--border-color)">
+          <label class="form-label">Você é Pessoa Física ou Jurídica?</label>
+          <select class="form-select" id="reg-type" onchange="RegisterApp.toggleFields()">
+            <option value="PJ">Pessoa Jurídica (Empresa)</option>
+            <option value="PF">Pessoa Física</option>
+          </select>
+        </div>
+
+        <!-- PJ Fields -->
+        <div id="pj-fields">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">CNPJ *</label>
+              <input class="form-input" id="reg-cnpj" placeholder="00.000.000/0001-00" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Regime Tributário (Se souber)</label>
+              <select class="form-select" id="reg-regime">
+                <option value="">Não sei informar</option>
+                <option value="Simples Nacional">Simples Nacional</option>
+                <option value="Lucro Presumido">Lucro Presumido</option>
+                <option value="Lucro Real">Lucro Real</option>
+                <option value="MEI">MEI</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Razão Social *</label>
+            <input class="form-input" id="reg-razao" placeholder="Nome oficial da empresa" required>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Nome Fantasia</label>
+              <input class="form-input" id="reg-fantasia" placeholder="Nome fantasia">
+            </div>
+            <div class="form-group">
+              <label class="form-label">CNAE Principal</label>
+              <input class="form-input" id="reg-cnae" placeholder="Ex: 6201-5/00">
+            </div>
+          </div>
+        </div>
+
+        <!-- PF Fields -->
+        <div id="pf-fields" style="display:none">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">CPF *</label>
+              <input class="form-input" id="reg-cpf" placeholder="000.000.000-00">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Nome Completo *</label>
+              <input class="form-input" id="reg-nome" placeholder="Seu nome completo">
+            </div>
+          </div>
+        </div>
+
+        <h4 class="font-bold text-md mt-xl mb-md">Dados de Contato</h4>
+
+        <!-- Common Fields -->
+        <div class="form-group">
+          <label class="form-label">Endereço Completo</label>
+          <input class="form-input" id="reg-address" placeholder="Rua, número, bairro, cidade/UF">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Telefone / WhatsApp *</label>
+            <input class="form-input" id="reg-phone" placeholder="(00) 00000-0000" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">E-mail *</label>
+            <input class="form-input" type="email" id="reg-email" placeholder="email@exemplo.com" required>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-full mt-lg btn-lg">
+          Enviar Cadastro
+        </button>
+      </form>
+    </div>
+    
+    <!-- Success Message (Hidden by default) -->
+    <div class="card card-glass text-center hidden py-xl" id="success-card">
+      <div style="width: 80px; height: 80px; background: var(--accent-secondary-soft); color: var(--accent-secondary); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto var(--space-lg);">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <h2 class="text-xl font-bold mb-sm">Cadastro enviado!</h2>
+      <p class="text-secondary mb-lg">Suas informações foram recebidas com sucesso pela nossa equipe de contabilidade. Entraremos em contato em breve.</p>
+    </div>
+
+  </div>
+
+  <!-- Firebase App & Firestore -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+  
+  <script src="js/utils.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/components.js"></script>
+  <script src="js/register.js"></script>
+</body>
+</html>
