@@ -119,11 +119,13 @@ var DocumentsPage = (() => {
     const content = `
       <form id="doc-form">
         <div class="form-group">
-          <div class="p-xl bg-tertiary border border-color rounded-lg flex flex-col items-center justify-center cursor-pointer hover:border-accent transition-base" style="border-style: dashed;">
+          <div class="p-xl bg-tertiary border border-color rounded-lg flex flex-col items-center justify-center cursor-pointer hover:border-accent transition-base" style="border-style: dashed;" onclick="document.getElementById('df-file').click()">
             <div class="text-secondary mb-sm">${Components.Icons.upload}</div>
             <p class="text-sm font-medium">Clique para selecionar ou arraste o arquivo aqui</p>
             <p class="text-xs text-secondary mt-xs">PDF, JPG, PNG (Max. 10MB)</p>
+            <input type="file" id="df-file" style="display: none" onchange="DocumentsPage.onFileSelect(event)">
           </div>
+          <div id="df-file-name" class="text-sm text-center mt-sm text-primary font-medium" style="min-height: 20px"></div>
         </div>
 
         <div class="form-group">
@@ -202,8 +204,19 @@ var DocumentsPage = (() => {
     }
   }
 
+  function onFileSelect(e) {
+    const file = e.target.files[0];
+    if (file) {
+      document.getElementById('df-file-name').textContent = file.name;
+      const nameInput = document.getElementById('df-name');
+      if (!nameInput.value) {
+        nameInput.value = file.name.split('.').slice(0, -1).join('.') || file.name;
+      }
+    }
+  }
+
   function afterRender() {}
   function onLeave() { filters = { client: '', category: '' }; }
 
-  return { render, afterRender, onLeave, onFilter, openForm, saveDoc, viewDoc, deleteDoc };
+  return { render, afterRender, onLeave, onFilter, openForm, saveDoc, viewDoc, deleteDoc, onFileSelect };
 })();

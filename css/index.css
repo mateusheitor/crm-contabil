@@ -183,7 +183,7 @@ table {
 .gap-xl { gap: var(--space-xl); }
 
 .grid { display: grid; }
-
+.grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
 /* Text */
 .text-xs { font-size: var(--font-xs); }
 .text-sm { font-size: var(--font-sm); }
