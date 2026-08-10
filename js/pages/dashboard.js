@@ -262,7 +262,12 @@ var DashboardPage = (() => {
     const H = rect.height;
 
     const clients = Store.getCollection('clients').filter(c => c.status === 'active' && c.type !== 'PF');
-    const regimes = {};
+    const regimes = {
+      'Simples Nacional': 0,
+      'Lucro Presumido': 0,
+      'Lucro Real': 0,
+      'MEI': 0
+    };
     clients.forEach(c => {
       const r = c.regimeTributario || 'Outro';
       regimes[r] = (regimes[r] || 0) + 1;
@@ -285,28 +290,30 @@ var DashboardPage = (() => {
     let startAngle = -Math.PI / 2;
 
     entries.forEach(([label, count]) => {
-      const sliceAngle = (count / total) * Math.PI * 2;
+      const sliceAngle = total > 0 ? (count / total) * Math.PI * 2 : 0;
       const endAngle = startAngle + sliceAngle;
 
-      ctx.beginPath();
-      ctx.moveTo(centerX, centerY);
-      ctx.arc(centerX, centerY, radius, startAngle, endAngle);
-      ctx.closePath();
-      ctx.fillStyle = colors[label] || '#8888aa';
-      ctx.fill();
+      if (sliceAngle > 0) {
+        ctx.beginPath();
+        ctx.moveTo(centerX, centerY);
+        ctx.arc(centerX, centerY, radius, startAngle, endAngle);
+        ctx.closePath();
+        ctx.fillStyle = colors[label] || '#8888aa';
+        ctx.fill();
 
-      // Label
-      const midAngle = startAngle + sliceAngle / 2;
-      const labelR = radius * 0.65;
-      const lx = centerX + Math.cos(midAngle) * labelR;
-      const ly = centerY + Math.sin(midAngle) * labelR;
+        // Label
+        const midAngle = startAngle + sliceAngle / 2;
+        const labelR = radius * 0.65;
+        const lx = centerX + Math.cos(midAngle) * labelR;
+        const ly = centerY + Math.sin(midAngle) * labelR;
 
-      ctx.fillStyle = 'white';
-      ctx.font = 'bold 13px Inter';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      if (sliceAngle > 0.3) {
-        ctx.fillText(count.toString(), lx, ly);
+        ctx.fillStyle = 'white';
+        ctx.font = 'bold 13px Inter';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        if (sliceAngle > 0.3) {
+          ctx.fillText(count.toString(), lx, ly);
+        }
       }
 
       startAngle = endAngle;
