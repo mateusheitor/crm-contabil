@@ -107,9 +107,9 @@ var DashboardPage = (() => {
           </div>
           <div class="upcoming-list">
             ${upcoming.map(evt => {
-              const d = new Date(evt.date + 'T00:00:00');
-              const typeInfo = Utils.EVENT_TYPE_MAP[evt.type] || {};
-              return `
+      const d = new Date(evt.date + 'T00:00:00');
+      const typeInfo = Utils.EVENT_TYPE_MAP[evt.type] || {};
+      return `
                 <div class="upcoming-item">
                   <div class="upcoming-date">
                     <div class="day">${d.getDate()}</div>
@@ -122,7 +122,7 @@ var DashboardPage = (() => {
                   <span class="badge badge-${_eventBadge(evt.type)}">${typeInfo.label || evt.type}</span>
                 </div>
               `;
-            }).join('')}
+    }).join('')}
             ${upcoming.length === 0 ? '<p class="text-sm text-secondary p-md">Nenhuma obrigação próxima</p>' : ''}
           </div>
         </div>
@@ -262,12 +262,7 @@ var DashboardPage = (() => {
     const H = rect.height;
 
     const clients = Store.getCollection('clients').filter(c => c.status === 'active' && c.type !== 'PF');
-    const regimes = {
-      'Simples Nacional': 0,
-      'Lucro Presumido': 0,
-      'Lucro Real': 0,
-      'MEI': 0
-    };
+    const regimes = {};
     clients.forEach(c => {
       const r = c.regimeTributario || 'Outro';
       regimes[r] = (regimes[r] || 0) + 1;
@@ -290,30 +285,28 @@ var DashboardPage = (() => {
     let startAngle = -Math.PI / 2;
 
     entries.forEach(([label, count]) => {
-      const sliceAngle = total > 0 ? (count / total) * Math.PI * 2 : 0;
+      const sliceAngle = (count / total) * Math.PI * 2;
       const endAngle = startAngle + sliceAngle;
 
-      if (sliceAngle > 0) {
-        ctx.beginPath();
-        ctx.moveTo(centerX, centerY);
-        ctx.arc(centerX, centerY, radius, startAngle, endAngle);
-        ctx.closePath();
-        ctx.fillStyle = colors[label] || '#8888aa';
-        ctx.fill();
+      ctx.beginPath();
+      ctx.moveTo(centerX, centerY);
+      ctx.arc(centerX, centerY, radius, startAngle, endAngle);
+      ctx.closePath();
+      ctx.fillStyle = colors[label] || '#8888aa';
+      ctx.fill();
 
-        // Label
-        const midAngle = startAngle + sliceAngle / 2;
-        const labelR = radius * 0.65;
-        const lx = centerX + Math.cos(midAngle) * labelR;
-        const ly = centerY + Math.sin(midAngle) * labelR;
+      // Label
+      const midAngle = startAngle + sliceAngle / 2;
+      const labelR = radius * 0.65;
+      const lx = centerX + Math.cos(midAngle) * labelR;
+      const ly = centerY + Math.sin(midAngle) * labelR;
 
-        ctx.fillStyle = 'white';
-        ctx.font = 'bold 13px Inter';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        if (sliceAngle > 0.3) {
-          ctx.fillText(count.toString(), lx, ly);
-        }
+      ctx.fillStyle = 'white';
+      ctx.font = 'bold 13px Inter';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      if (sliceAngle > 0.3) {
+        ctx.fillText(count.toString(), lx, ly);
       }
 
       startAngle = endAngle;
