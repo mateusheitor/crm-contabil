@@ -16,6 +16,23 @@ var DashboardPage = (() => {
     const currentMonth = now.getMonth();
     const currentYear = now.getFullYear();
 
+    // Active clients trend calculation
+    const storageKey = `crm_active_clients_baseline_${currentMonth}_${currentYear}`;
+    let baselineActive = localStorage.getItem(storageKey);
+    if (baselineActive === null) {
+      // Estimate baseline: current active clients minus those created this month
+      const addedThisMonth = activeClients.filter(c => {
+        if (!c.createdAt) return false;
+        const d = new Date(c.createdAt + 'T00:00:00');
+        return d.getMonth() === currentMonth && d.getFullYear() === currentYear;
+      }).length;
+      baselineActive = Math.max(0, activeClients.length - addedThisMonth);
+      localStorage.setItem(storageKey, baselineActive);
+    }
+    const clientsTrendVal = activeClients.length - parseInt(baselineActive, 10);
+    const clientsTrendText = clientsTrendVal > 0 ? `+${clientsTrendVal}` : (clientsTrendVal === 0 ? '0' : `${clientsTrendVal}`);
+    const clientsTrendDir = clientsTrendVal >= 0 ? 'up' : 'down';
+
     const monthInvoices = invoices.filter(inv => {
       const d = new Date(inv.createdAt + 'T00:00:00');
       return d.getMonth() === currentMonth && d.getFullYear() === currentYear;
@@ -57,7 +74,7 @@ var DashboardPage = (() => {
 
       <!-- KPI Cards -->
       <div class="dashboard-grid stagger-children">
-        ${_kpiCard('Clientes Ativos', activeClients.length, 'clients', 'primary', 'accent-primary', '+2', 'up', false, 'clients')}
+        ${_kpiCard('Clientes Ativos', activeClients.length, 'clients', 'primary', 'accent-primary', clientsTrendText, clientsTrendDir, false, 'clients')}
         ${_kpiCard('Receita Mensal', Utils.formatCurrency(monthRevenue), 'financial', 'success', 'accent-success', `${revenueTrend > 0 ? '+' : ''}${revenueTrend}%`, revenueTrend >= 0 ? 'up' : 'down', false, 'financial')}
         ${_kpiCard('Tarefas Pendentes', pendingTasks, 'services', 'warning', 'accent-warning', '', '', false, 'services')}
         ${_kpiCard('Serviços Atrasados', overdueTasks, 'clock', 'danger', 'accent-danger', '', '', overdueTasks > 0, 'services')}
