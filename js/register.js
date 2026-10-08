@@ -17,6 +17,7 @@ const RegisterApp = (() => {
     document.getElementById('register-form').addEventListener('submit', submitForm);
     
     // Masking simple fields could be added here, but for simplicity we rely on HTML5 placeholders
+<<<<<<< HEAD
     
     // Autofill CNPJ
     const cnpjInput = document.getElementById('reg-cnpj');
@@ -52,6 +53,8 @@ const RegisterApp = (() => {
         }
       });
     }
+=======
+>>>>>>> 873a5fafbd1bb05de4461b7f765cfe8a45b3ff9b
   }
 
   function toggleFields() {
@@ -98,7 +101,10 @@ const RegisterApp = (() => {
       data.nomeFantasia = document.getElementById('reg-fantasia').value;
       data.regimeTributario = document.getElementById('reg-regime').value;
       data.cnae = document.getElementById('reg-cnae').value;
+<<<<<<< HEAD
       data.socios = document.getElementById('reg-socios').value;
+=======
+>>>>>>> 873a5fafbd1bb05de4461b7f765cfe8a45b3ff9b
       
       // Basic validation
       if (!data.cnpj || !data.razaoSocial) {

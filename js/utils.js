@@ -224,6 +224,7 @@ var Utils = (() => {
     URL.revokeObjectURL(link.href);
   }
 
+<<<<<<< HEAD
   // ---- API Externa ----
   async function fetchCNPJData(cnpj) {
     const cleanCNPJ = cnpj.replace(/\D/g, '');
@@ -239,12 +240,18 @@ var Utils = (() => {
     }
   }
 
+=======
+>>>>>>> 873a5fafbd1bb05de4461b7f765cfe8a45b3ff9b
   return {
     formatCPF, formatCNPJ, formatPhone, formatCurrency, formatDate, formatDateTime, formatDateISO,
     timeAgo, getMonthName, getMonthShort, MONTHS, MONTHS_SHORT, WEEKDAYS,
     validateCPF, validateCNPJ, validateEmail,
     generateId, debounce, getInitials, getAvatarColor, escapeHtml, daysUntil,
     REGIME_MAP, SERVICE_STATUS_MAP, INVOICE_STATUS_MAP, SERVICE_TYPE_MAP, DOC_CATEGORY_MAP, PRIORITY_MAP, EVENT_TYPE_MAP,
+<<<<<<< HEAD
     exportCSV, fetchCNPJData
+=======
+    exportCSV
+>>>>>>> 873a5fafbd1bb05de4461b7f765cfe8a45b3ff9b
   };
 })();

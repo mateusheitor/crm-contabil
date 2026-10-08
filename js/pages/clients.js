@@ -224,7 +224,10 @@ var ClientsPage = (() => {
             <div class="client-info-field"><label>CNAE</label><p>${c.cnae || '—'}</p></div>
             ${c.inscricaoEstadual ? `<div class="client-info-field"><label>Inscrição Estadual</label><p>${c.inscricaoEstadual}</p></div>` : ''}
             ${c.inscricaoMunicipal ? `<div class="client-info-field"><label>Inscrição Municipal</label><p>${c.inscricaoMunicipal}</p></div>` : ''}
+<<<<<<< HEAD
             ${c.socios ? `<div class="client-info-field mt-sm"><label>Quadro Societário</label><p style="white-space: pre-wrap;" class="text-sm">${c.socios}</p></div>` : ''}
+=======
+>>>>>>> 873a5fafbd1bb05de4461b7f765cfe8a45b3ff9b
           ` : `
             <div class="client-info-field"><label>CPF</label><p>${c.cpf}</p></div>
           `}
@@ -399,10 +402,13 @@ var ClientsPage = (() => {
               <input class="form-input" id="cf-contact-phone" placeholder="(00) 00000-0000" value="${client?.contactPhone || ''}">
             </div>
           </div>
+<<<<<<< HEAD
           <div class="form-group">
             <label class="form-label">Quadro Societário</label>
             <textarea class="form-textarea" id="cf-socios" placeholder="Sócios da empresa..." rows="3">${client?.socios || ''}</textarea>
           </div>
+=======
+>>>>>>> 873a5fafbd1bb05de4461b7f765cfe8a45b3ff9b
         </div>
 
         <!-- PF Fields -->
@@ -469,6 +475,7 @@ var ClientsPage = (() => {
     Components.openModal({ title: isEdit ? 'Editar Cliente' : 'Novo Cliente', content, footer, size: 'lg' });
 
     // Toggle fields based on type
+<<<<<<< HEAD
     setTimeout(() => {
       toggleFormFields();
       setupFormListeners();
@@ -516,6 +523,9 @@ var ClientsPage = (() => {
         }
       });
     }
+=======
+    setTimeout(() => toggleFormFields(), 50);
+>>>>>>> 873a5fafbd1bb05de4461b7f765cfe8a45b3ff9b
   }
 
   function toggleFormFields() {
@@ -549,7 +559,10 @@ var ClientsPage = (() => {
       data.inscricaoMunicipal = document.getElementById('cf-im').value;
       data.contactName = document.getElementById('cf-contact-name').value;
       data.contactPhone = document.getElementById('cf-contact-phone').value;
+<<<<<<< HEAD
       data.socios = document.getElementById('cf-socios')?.value || '';
+=======
+>>>>>>> 873a5fafbd1bb05de4461b7f765cfe8a45b3ff9b
 
       if (!data.cnpj || !data.razaoSocial) {
         Components.toast('Preencha CNPJ e Razão Social', 'warning');
